@@ -57,7 +57,7 @@ var data = [ //adding additional objects will increase the questions on trivia
 
 function generator(x){  // function generates the time / question / answer
   $("#game").empty(); //empties out the div as correct answer + image are removed
-  var checker =[]; // variable to ensure there are no duplicates
+  var checker =[]; // variable to ensure there are no duplicates and clears
   
   p = $("<p>");  // creates div 
   p.html('<p id=Timeline> Timer: <span id="Time">'+timer+'</span> seconds</p>'); // add class
@@ -83,7 +83,7 @@ function generator(x){  // function generates the time / question / answer
       $("#board").append(p); //appends to div #board
     }
   }
-  // buttonClick();  // remapping purposes
+  // buttonClick();  // remapping purposes 'old way of doing Jquery class listener' < search for this to enable old way
 }
 
 
@@ -114,13 +114,13 @@ function reset(){
 
 function gameover(){ //gameover function
   $("#game").empty(); //empty game div
-  var h1 =$("<h1>"); //header1 html
+  h1 =$("<h1>"); //header1 html
   score=(correct/data.length*100).toFixed(2); //ensures 2 decimal for percentage
   h1.html('<h1>GAME OVER</h1><p>Your Score is : '+score+'%</p>'); //updates text with score
 
   $("#game").append(h1); //updates html
   
-  setTimeout(run,1000*delay*5); // longer wait time for delay allows user see score + stats
+  setTimeout(run,1000*delay*4); // longer wait time for delay allows user see score + stats
 
   div =$("<div>"); //creates stats of correct, wrong, and unanswered to html
   div.attr("id","stats")
@@ -202,6 +202,8 @@ var x= parseInt(selection); // converts user input(string) to integer
 answercheck(x); //passes int from variable x to answercheck function
 
 });
+
+
 //---- old way of doing Jquery class listener
 // function buttonClick() { 
 // $(".answer").on("click", function() {
