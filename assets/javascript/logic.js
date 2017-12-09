@@ -137,7 +137,7 @@ function gameover(){
     //  Decrease number by one.
     timer--;
     if(timer===0){
-    $('#Timeline').text("OUT OF TIME");
+    $('#Timeline').text("TIME'S UP!!!!!");
     answercheck(-1); } 
     $("#Time").html(timer);
 
