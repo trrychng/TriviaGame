@@ -36,13 +36,13 @@ function generator(x){
 
   p = $("<p>");
   p.attr('id', "board")
-  p.text(data[0].question);
+  p.text(data[qc].question);
   p.addClass("text-secondary");
   $("#game").append(p); //displays question on HTML
 
 
-  while(data[0].answers.length > checker.length){  //creates #'s of button based on numButtons
-    var i=Math.floor(Math.random()*(data[0].answers.length));
+  while(data[qc].answers.length > checker.length){  //creates #'s of button based on numButtons
+    var i=Math.floor(Math.random()*(data[qc].answers.length));
     if(checker.indexOf(i) === -1){ //ensures no duplicate
       console.log(i);
       checker.push(i); //start pushing to array
@@ -50,7 +50,7 @@ function generator(x){
       p = $("<p>");  // creates div 
       p.addClass("answer"); // add class
       p.attr('value', i); // adds values
-      p.text(data[0].answers[i]); // text  for button
+      p.text(data[qc].answers[i]); // text  for button
       $("#board").append(p); //appends to div buttons
     }
   }
@@ -110,7 +110,7 @@ function answercheck(x){
 
   }
   else {
-  p.text("The Correct Answer is "+data[0].answers[0]);
+  p.text("The Correct Answer is "+data[qc].answers[0]);
   p.addClass("text-secondary");
   if(timer===0){
     noanswer++;
@@ -153,7 +153,7 @@ answercheck(selection);
 
 console.log(data.length);
 
-console.log(data[0].question);
+console.log(data[qc].question);
 
 
 
