@@ -113,12 +113,12 @@ function reset(){
 function gameover(){
   $("#game").empty();
   var h1 =$("<h1>");
-  score=correct/data.length*100;
+  score=(correct/data.length*100).toFixed(2);
   h1.html('<h1>GAME OVER</h1><p>Your Score is : '+score+'%</p>');
 
   $("#game").append(h1);
   qc=0;
-  setTimeout(run,1000*delay);
+  setTimeout(run,1000*delay*5);
 
   div =$("<div>");
   div.attr("id","stats")
