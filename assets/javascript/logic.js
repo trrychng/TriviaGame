@@ -1,16 +1,19 @@
-var timer= 15;
+var timer= 15; //timer for question
+var delay = 3; //timer for answer
+var assets="assets/images/" //map to images in root.
+
+//declaring game variables
 var score=0
-var delay = 3;
 var qc=0; //question counter 
-var correct=0;
-var wrong=0;
-var noanswer=0;
-var game = true;
-var assets="assets/images/"
+var correct=0; //user correct
+var wrong=0; //user wrong
+var noanswer=0; //user unanswered
+var game = true; //boolean filed no used at the moment.
+
 
 
 var data = [ //adding additional objects will increase the questions on trivia 
-//ALWAY PUT RIGHT ANSWER in the first selection!
+//CORRECT ANSWER should be the first array in answers in object so answer[0] is marked as correct.
   {
     question: "Who was in the boy band N'SYNC?",
     answers: ["Chris Kirkpatrick", "Justin Bieber","Mariah Carey","Donald Trump"],
@@ -52,75 +55,74 @@ var data = [ //adding additional objects will increase the questions on trivia
 
 
 
-function generator(x){
-  $("#game").empty();
-  var checker =[];
-  console
-
+function generator(x){  // function generates the time / question / answer
+  $("#game").empty(); //empties out the div as correct answer + image are removed
+  var checker =[]; // variable to ensure there are no duplicates
+  
   p = $("<p>");  // creates div 
   p.html('<p id=Timeline> Timer: <span id="Time">'+timer+'</span> seconds</p>'); // add class
-  $("#game").append(p)
+  $("#game").append(p) //appends this to game div
 
-  p = $("<p>");
-  p.attr('id', "board")
-  p.text(data[qc].question);
-  p.addClass("text-secondary");
-  $("#game").append(p); //displays question on HTML
+  p = $("<p>"); //creates question
+  p.attr('id', "board")  // creates ID board for question
+  p.text(data[qc].question); //add text with question from data variable
+  p.addClass("text-secondary"); // add class to this
+  $("#game").append(p); //appends game div with new div of board
 
 
-  while(data[qc].answers.length > checker.length){  //creates #'s of button based on numButtons
-    var i=Math.floor(Math.random()*(data[qc].answers.length));
+  while(data[qc].answers.length > checker.length){ //randomize the answer selections
+    var i=Math.floor(Math.random()*(data[qc].answers.length)); //same as above but random number generator
     if(checker.indexOf(i) === -1){ //ensures no duplicate
-      console.log(i);
-      checker.push(i); //start pushing to array
-      console.log(checker);
+      console.log(i);  //logs
+      checker.push(i); //start pushing to array if answer is used
+      console.log(checker); //logs
       p = $("<p>");  // creates div 
       p.addClass("answer"); // add class
       p.attr('value', i); // adds values
-      p.text(data[qc].answers[i]); // text  for button
-      $("#board").append(p); //appends to div buttons
+      p.text(data[qc].answers[i]); // text for button
+      $("#board").append(p); //appends to div #board
     }
   }
-  buttonClick();
+  // buttonClick();  // remapping purposes
 }
 
 
 
 function reset(){
-  timer= 15;
-  qc++;
-  score=0
+  timer= 15; // resets timer
+  qc++; //determines which question you are on
+  score=0 //resets score calculation from GameOver function
 }
 
 
 
  function run() {
-  if(data.length > qc)
+  if(data.length > qc) //ensures that there are still questions to be generated
   {
-    console.log("starting question");
-    intervalId = setInterval(count, 1000);
-    generator();
+    console.log("starting question"); 
+    intervalId = setInterval(count, 1000); // timers
+    generator(); //generates the HTML function
   }
   else{
-    console.log("gameover");
-    gameover();
+    console.log("gameover");  //if no more  qc in data this game will be over
+    gameover(); //game over function
   }
        
 }
 
 
 
-function gameover(){
-  $("#game").empty();
-  var h1 =$("<h1>");
-  score=(correct/data.length*100).toFixed(2);
-  h1.html('<h1>GAME OVER</h1><p>Your Score is : '+score+'%</p>');
+function gameover(){ //gameover function
+  $("#game").empty(); //empty game div
+  var h1 =$("<h1>"); //header1 html
+  score=(correct/data.length*100).toFixed(2); //ensures 2 decimal for percentage
+  h1.html('<h1>GAME OVER</h1><p>Your Score is : '+score+'%</p>'); //updates text with score
 
-  $("#game").append(h1);
-  qc=0;
-  setTimeout(run,1000*delay*5);
+  $("#game").append(h1); //updates html
+  
+  setTimeout(run,1000*delay*5); // longer wait time for delay allows user see score + stats
 
-  div =$("<div>");
+  div =$("<div>"); //creates stats of correct, wrong, and unanswered to html
   div.attr("id","stats")
   div.text("Correct answers :"+correct);
   $("#game").append(div);
@@ -132,46 +134,47 @@ function gameover(){
   div.text("Unanswered :"+noanswer);
   $("#stats").append(div);
 
-  correct=0;
-  wrong=0;
-  noanswer=0;
+  qc=0; //restarts question for new game
+  correct=0; //restarts correct answer for new game 
+  wrong=0;  //restarts wrong answer for new game 
+  noanswer=0; //restarts unaswer answer for new game 
 }
 
 
 
- function count() {
+ function count() { //timer for the questions to display
     //  Decrease number by one.
-    timer--;
-    if(timer===0){
+    timer--; //reduced timer by 1
+    if(timer===0){ // if timer is 0 it will submit -1 to answer  function
     $('#Timeline').text("TIME'S UP!!!!!");
     answercheck(-1); } 
-    $("#Time").html(timer);
+    $("#Time").html(timer);  //update time on html
 
 }
 
 
 function answercheck(x){
-  clearInterval(intervalId);
-  $("#board").empty();
+  clearInterval(intervalId); //stops timer.
+  $("#board").empty();  //clears the display
 
-  p = $("<p>");
-  if(x ===0){
-  p.text("THAT'S CORRECT! "+data[qc].answers[0]+".");
-  p.addClass("text-secondary");
-  correct++;
+  p = $("<p>"); //clears html to show CORRECT answer
+  if(x ===0){ //if user selected first answer[0] this will be correct
+  p.text("THAT'S CORRECT! "+data[qc].answers[0]+"."); // update text
+  p.addClass("text-secondary"); //adding class
+  correct++; //updates correct
   }
-  else {
-  p.text("You selected " +data[qc].answers[x]+". The Correct Answer is "+data[qc].answers[0]+"!");
-  p.addClass("text-secondary");
-  if(timer===0){
+  else { //otherwise user enter incorrect answer or times out
+  p.text("You selected " +data[qc].answers[x]+". The Correct Answer is "+data[qc].answers[0]+"!");//updates text
+  p.addClass("text-secondary");//add class
+  if(timer===0){ //if timer is 0 updates noanswer variable
     noanswer++;
   }
-  else{
+  else{ //if user enter wrong answer updates wrong
     wrong++;
   }
 
 
-  }
+  } // creates image tag off data object image
   $("#board").append(p); //updates on HTML
   var Image = $("<img>");
   Image.attr("src", assets+data[qc].image);
@@ -180,34 +183,43 @@ function answercheck(x){
   assets
 
   game=false;
-  reset();
+  reset(); //reset function is ran so it will continue to next question reset variables such as timers and +1 to question count
 
-  setTimeout(run,1000*delay);
+  setTimeout(run,1000*delay); //runs next set of question generation
 
 }
 
 
 
-run();
+run(); //starts the game. should probably create on click start game.
 
 
-function buttonClick() { 
-$(".answer").on("click", function() {
-console.log($(this).attr("value"));
-var selection =$(this).attr("value");
-var x= parseInt(selection)
-answercheck(x);
+$(document.body).on("click", ".answer", function() { // listener on answer
+
+console.log($(this).attr("value")); //logs
+var selection =$(this).attr("value"); //assigns user inut to selection
+var x= parseInt(selection); // converts user input(string) to integer 
+answercheck(x); //passes int from variable x to answercheck function
 
 });
-}
+//---- old way of doing Jquery class listener
+// function buttonClick() { 
+// $(".answer").on("click", function() {
+// console.log($(this).attr("value"));
+// var selection =$(this).attr("value");
+// var x= parseInt(selection)
+// answercheck(x);
+
+// });
+// }
 
 
 
 
-console.log(data.length);
+console.log(data.length); //log
 
-console.log(data[qc].question);
-
+console.log(data[qc].question); // log
+ 
 
 
 
