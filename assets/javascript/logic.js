@@ -8,7 +8,8 @@ var noanswer=0;
 var game = true;
 
 
-var data = [ //adding additional objects will increase the questions on trivia
+var data = [ //adding additional objects will increase the questions on trivia 
+//ALWAY PUT RIGHT ANSWER in the first selection!
   {
     question: "Who was in the boy band N'SYNC?",
     answers: ["Chris Kirkpatrick", "Justin Bieber","Mariah Carey","Donald Trump"],
@@ -17,6 +18,26 @@ var data = [ //adding additional objects will increase the questions on trivia
   {
     question: "From the TV show Saved by the Bell, what is Screech's Real Name?",
     answers: ["Dustin Neil Diamond", "Geri Halliwell","Paul Gascoigne","Cherie Blair"],
+  },
+
+  {
+    question: "What animal is Pinky from the TV show Pinky and the Brain?",
+    answers: ["Mouse", "Snake","Pokemon","Donald Trump"],
+  },
+
+{
+    question: "In X-Men, what was Logan's alias?",
+    answers: ["Wolverine", "Magneto","Rogue","Gambit"],
+  },
+
+{
+    question: "Which one of these is NOT a cast on Teenage Mutant Ninja Turtles?",
+    answers: ["Pikachu", "April","Shredder","Beebop"],
+  },
+
+{
+    question: "In Dragon Ball Z, Goku is what race?",
+    answers: ["Saiyin", "Human","Chinese","European"],
   }
 
 ]
@@ -75,19 +96,38 @@ function reset(){
   }
   else{
     console.log("gameover");
+    gameover();
   }
-  
-  
+       
+}
 
-    
+
+
+function gameover(){
+  $("#game").empty();
+  var h1 =$("<h1>");
+  var score=correct/data.length*100;
+
+  h1.html('<h1>GAME OVER</h1><p>Your Score is : '+score+'%</p>');
+  $("#game").append(h1);
+  qc=0;
+  setTimeout(run,1000*delay);
+
+  
+  // h1.text("Correct answers :"+correct);
+  // $("#game").append(h1);
+  // h1.text("Incorrect answers :"+wrong);
+  // $("#game").append(h1);
+  // h1.text("Unanswered :"+noanswer);
+  // $("#game").append(h1);
+  // h1.text("Score :"+noanswer+"%");
+  // $("#game").append(h1);
 }
 
 
 
  function Game() {
-
-
-      //  Decrease number by one.
+    //  Decrease number by one.
     timer--;
     if(timer===0){
     // $('#Timeline').html('<h1>T"OUT OF TIME"</h1>);
@@ -105,12 +145,12 @@ function answercheck(x){
   p = $("<p>");
 
   if(x ===0){
-  p.text("CORRECT!");
+  p.text("THAT'S CORRECT! "+data[qc].answers[0]+".");
   p.addClass("text-secondary");
-
+  correct++;
   }
   else {
-  p.text("The Correct Answer is "+data[qc].answers[0]);
+  p.text("WRONG! The Correct Answer is "+data[qc].answers[0]+"!");
   p.addClass("text-secondary");
   if(timer===0){
     noanswer++;
@@ -121,11 +161,12 @@ function answercheck(x){
 
 
   }
-  $("#board").append(p); //displays question on HTML
+  $("#board").append(p); //updates on HTML
   // --------- TERRY ADD IMAGE URL -------------
 
   game=false;
   reset();
+
   setTimeout(run,1000*delay);
 
 }
@@ -139,11 +180,8 @@ function buttonClick() {
 $(".answer").on("click", function() {
 console.log($(this).attr("value"));
 var selection =$(this).attr("value");
-
-answercheck(selection);
-
-
-
+var x= parseInt(selection)
+answercheck(x);
 
 });
 }
