@@ -61,12 +61,13 @@ function generator(x){  // function generates the time / question / answer
   
   p = $("<p>");  // creates div 
   p.html('<p id=Timeline> Timer: <span id="Time">'+timer+'</span> seconds</p>'); // add class
+  
   $("#game").append(p) //appends this to game div
 
   p = $("<p>"); //creates question
   p.attr('id', "board")  // creates ID board for question
   p.text(data[qc].question); //add text with question from data variable
-  p.addClass("text-secondary"); // add class to this
+  p.addClass("text-secondary question"); // add class to this
   $("#game").append(p); //appends game div with new div of board
 
 
