@@ -1,5 +1,5 @@
 var timer= 15;
-var score = 0;
+var score=0
 var delay = 3;
 var qc=0; //question counter 
 var correct=0;
@@ -55,7 +55,6 @@ var data = [ //adding additional objects will increase the questions on trivia
 function generator(x){
   $("#game").empty();
   var checker =[];
-  var p = $("<p>"); 
   console
 
   p = $("<p>");  // creates div 
@@ -90,6 +89,7 @@ function generator(x){
 function reset(){
   timer= 15;
   qc++;
+  score=0
 }
 
 
@@ -113,22 +113,28 @@ function reset(){
 function gameover(){
   $("#game").empty();
   var h1 =$("<h1>");
-  var score=correct/data.length*100;
-
+  score=correct/data.length*100;
   h1.html('<h1>GAME OVER</h1><p>Your Score is : '+score+'%</p>');
+
   $("#game").append(h1);
   qc=0;
   setTimeout(run,1000*delay);
 
+  div =$("<div>");
+  div.attr("id","stats")
+  div.text("Correct answers :"+correct);
+  $("#game").append(div);
   
-  // h1.text("Correct answers :"+correct);
-  // $("#game").append(h1);
-  // h1.text("Incorrect answers :"+wrong);
-  // $("#game").append(h1);
-  // h1.text("Unanswered :"+noanswer);
-  // $("#game").append(h1);
-  // h1.text("Score :"+noanswer+"%");
-  // $("#game").append(h1);
+  div =$("<div>");
+  div.text("Incorrect answers :"+wrong);
+  $("#stats").append(div);
+  div =$("<div>");
+  div.text("Unanswered :"+noanswer);
+  $("#stats").append(div);
+
+  correct=0;
+  wrong=0;
+  noanswer=0;
 }
 
 
@@ -147,9 +153,8 @@ function gameover(){
 function answercheck(x){
   clearInterval(intervalId);
   $("#board").empty();
-  var p = $("<p>"); 
-  p = $("<p>");
 
+  p = $("<p>");
   if(x ===0){
   p.text("THAT'S CORRECT! "+data[qc].answers[0]+".");
   p.addClass("text-secondary");
