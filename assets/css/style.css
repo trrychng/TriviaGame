@@ -6,3 +6,9 @@ img{
 
 
 }
+
+
+.answer:hover { 
+    background-color: black;
+    font-weight: bold;
+}
