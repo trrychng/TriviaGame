@@ -161,7 +161,7 @@ function answercheck(x){
   correct++;
   }
   else {
-  p.text("The Correct Answer is "+data[qc].answers[0]+"!");
+  p.text("You selected " +data[qc].answers[x]+". The Correct Answer is "+data[qc].answers[0]+"!");
   p.addClass("text-secondary");
   if(timer===0){
     noanswer++;
