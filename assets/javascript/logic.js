@@ -6,6 +6,7 @@ var correct=0;
 var wrong=0;
 var noanswer=0;
 var game = true;
+var assets="assets/images/"
 
 
 var data = [ //adding additional objects will increase the questions on trivia 
@@ -13,31 +14,37 @@ var data = [ //adding additional objects will increase the questions on trivia
   {
     question: "Who was in the boy band N'SYNC?",
     answers: ["Chris Kirkpatrick", "Justin Bieber","Mariah Carey","Donald Trump"],
+    image: "nsync.jpg",
   },
 
   {
     question: "From the TV show Saved by the Bell, what is Screech's Real Name?",
     answers: ["Dustin Neil Diamond", "Geri Halliwell","Paul Gascoigne","Cherie Blair"],
+    image: "screech.jpg",
   },
 
   {
     question: "What animal is Pinky from the TV show Pinky and the Brain?",
     answers: ["Mouse", "Snake","Pokemon","Donald Trump"],
+    image: "brainpinky.jpg",
   },
 
 {
     question: "In X-Men, what was Logan's alias?",
     answers: ["Wolverine", "Magneto","Rogue","Gambit"],
+    image: "wolverine.jpg",
   },
 
 {
     question: "Which one of these is NOT a cast on Teenage Mutant Ninja Turtles?",
     answers: ["Pikachu", "April","Shredder","Beebop"],
+    image: "tmnt.jpeg",
   },
 
 {
     question: "In Dragon Ball Z, Goku is what race?",
-    answers: ["Saiyin", "Human","Chinese","European"],
+    answers: ["Saiyan", "Human","Chinese","European"],
+    image: "dbz.jpg"
   }
 
 ]
@@ -91,7 +98,7 @@ function reset(){
   if(data.length > qc)
   {
     console.log("starting question");
-    intervalId = setInterval(Game, 1000);
+    intervalId = setInterval(count, 1000);
     generator();
   }
   else{
@@ -126,13 +133,12 @@ function gameover(){
 
 
 
- function Game() {
+ function count() {
     //  Decrease number by one.
     timer--;
     if(timer===0){
-    // $('#Timeline').html('<h1>T"OUT OF TIME"</h1>);
+    $('#Timeline').text("OUT OF TIME");
     answercheck(-1); } 
-    //  Show the number in the #show-number tag.
     $("#Time").html(timer);
 
 }
@@ -150,7 +156,7 @@ function answercheck(x){
   correct++;
   }
   else {
-  p.text("WRONG! The Correct Answer is "+data[qc].answers[0]+"!");
+  p.text("The Correct Answer is "+data[qc].answers[0]+"!");
   p.addClass("text-secondary");
   if(timer===0){
     noanswer++;
@@ -162,7 +168,11 @@ function answercheck(x){
 
   }
   $("#board").append(p); //updates on HTML
-  // --------- TERRY ADD IMAGE URL -------------
+  var Image = $("<img>");
+  Image.attr("src", assets+data[qc].image);
+  Image.attr("alt", "trivia image");
+  $("#board").append(Image);
+  assets
 
   game=false;
   reset();
